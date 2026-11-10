@@ -1,0 +1,372 @@
+/* --- 1. VARIABLES Y CONFIGURACIÓN BASE --- */
+:root {
+    --primary: #ff4757;       /* Rojo Pasión */
+    --primary-dark: #e84118;
+    --text: #2f3542;
+    --glass: rgba(255, 255, 255, 0.35); /* Efecto vidrio base */
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    --input-bg: #f1f2f6;      /* Fondo gris suave para inputs */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    color: var(--text);
+    overflow-x: hidden;
+    /* Fondo degradado estilo atardecer romántico */
+    background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+}
+
+/* --- 2. ANIMACIÓN DE FONDO --- */
+.bg-animation {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 10%, #ffdde1, transparent 60%),
+                radial-gradient(circle at 10% 90%, #ee9ca7, transparent 60%);
+    animation: pulseBg 10s infinite alternate;
+}
+
+@keyframes pulseBg {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+/* --- 3. CONTENEDOR PRINCIPAL (MÓVIL) --- */
+.glass-container {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px;
+    width: 100%;
+    max-width: 500px; /* Ancho ideal para celulares */
+    box-shadow: var(--shadow);
+}
+
+header { text-align: center; margin-bottom: 25px; }
+
+/* --- 3.1 ESTILOS DE LOS LOGOS (HEADER) --- */
+.logos-header {
+    display: flex;
+    justify-content: space-between; /* Uno a la izq, otro a la der */
+    align-items: center;
+    width: 100%;
+    padding: 0 5px;
+    margin-bottom: 15px;
+}
+
+.logo-school {
+    height: 50px; /* Tamaño controlado */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombrita suave */
+    transition: transform 0.3s;
+}
+
+.logo-startup {
+    height: 55px; /* Un poco más grande para compensar el espacio en blanco */
+    border-radius: 12px;
+    /* TRUCO NIVARA: Esto hace que el fondo blanco se vuelva transparente */
+    mix-blend-mode: multiply; 
+    transition: transform 0.3s;
+}
+
+.logo-school:hover, .logo-startup:hover {
+    transform: scale(1.1); /* Efecto zoom al pasar el mouse/dedo */
+}
+
+/* --- 3.2 TÍTULOS --- */
+.main-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    color: var(--primary);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 5px;
+    line-height: 1.2;
+}
+
+.subtitle { font-size: 0.9rem; letter-spacing: 1px; color: #555; }
+.logo-area { font-weight: bold; font-size: 1.2rem; color: #fff; text-shadow: 0 0 5px rgba(0,0,0,0.2); }
+
+/* --- 4. TIENDA Y PRODUCTOS --- */
+.section-title {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.productos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column; /* Foto arriba */
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s;
+    border: 3px solid transparent; /* Para el borde rojo al seleccionar */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.95);
+    border-color: var(--primary);
+}
+
+/* Estilo para tus fotos reales */
+.card-img-real {
+    width: 100%;
+    height: 220px; /* Altura fija para uniformidad */
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.card-info h3 { font-size: 1.3rem; color: var(--text); margin-bottom: 5px; }
+.card-info p { font-size: 0.85rem; color: #666; margin-bottom: 8px; }
+
+.precio {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* --- 5. FORMULARIO AESTHETIC --- */
+.hidden { display: none; }
+
+#buzon {
+    margin-top: 30px;
+    animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.aesthetic-form {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.resumen-pedido {
+    background: #fff;
+    color: var(--primary);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    border: 2px dashed var(--primary);
+}
+
+.label-titulo {
+    font-size: 0.85rem;
+    color: #636e72;
+    margin-bottom: 12px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* --- 6. BURBUJAS DE COLORES --- */
+.color-selector {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Por si son muchos colores en pantalla pequeña */
+}
+
+.color-option { cursor: pointer; position: relative; }
+.color-option input { display: none; }
+
+.bubble {
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid white;
+}
+
+/* Estado seleccionado de burbuja */
+.color-option input:checked + .bubble {
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    border: 2px solid #2d3436;
+}
+
+/* --- 7. SWITCH ALUMNO / PROFESOR --- */
+.center-content { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+.toggle-container { display: flex; align-items: center; gap: 12px; margin-top: 5px; }
+.toggle-label { font-weight: bold; font-size: 0.9rem; color: var(--text); }
+
+.switch { position: relative; display: inline-block; width: 60px; height: 30px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute; cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #fab1a0; /* Color Alumno */
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute; content: "";
+    height: 22px; width: 22px;
+    left: 4px; bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider { background-color: #6c5ce7; /* Color Profe */ }
+input:checked + .slider:before { transform: translateX(30px); }
+
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+
+/* --- 8. INPUTS CON ICONOS --- */
+.input-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.row { display: flex; gap: 10px; }
+
+.input-wrapper .icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.textarea-wrapper .icon { top: 20px; }
+
+.input-wrapper input, 
+.input-wrapper select, 
+.input-wrapper textarea {
+    width: 100%;
+    padding: 15px 15px 15px 45px; /* Espacio extra a la izquierda para el icono */
+    border: none;
+    background: var(--input-bg);
+    border-radius: 30px; /* Píldora */
+    font-size: 0.95rem;
+    color: #2d3436;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05);
+    outline: none;
+}
+
+.input-wrapper textarea { border-radius: 20px; resize: none; }
+
+/* Efecto focus brillante */
+.input-wrapper input:focus, 
+.input-wrapper select:focus, 
+.input-wrapper textarea:focus {
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.25);
+    outline: 2px solid var(--primary);
+}
+
+.separator-dots {
+    height: 4px;
+    background-image: radial-gradient(circle, #b2bec3 1px, transparent 1px);
+    background-size: 10px 10px;
+    margin: 20px 0;
+    opacity: 0.5;
+}
+
+/* --- 9. BOTONES --- */
+.btn-enviar {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+    transition: 0.3s;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-enviar:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6); }
+
+.btn-cancelar {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* --- 10. PIE DE PÁGINA (TU MARCA NIVARA) --- */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.4); /* Línea divisoria sutil */
+    font-size: 0.8rem;
+    color: #636e72;
+}
+
+footer p { margin: 5px 0; }
+
+footer a {
+    color: var(--primary); /* Usa el rojo de la marca */
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.copyright {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}

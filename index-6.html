@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detector de IA — MVP</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <i class="ti ti-scan"></i>
+          <span>AI Detector</span>
+        </div>
+        <p class="header-sub">Análisis forense de imágenes y voces generadas con inteligencia artificial</p>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <section class="panel panel-input">
+
+        <div class="tabs">
+          <button class="tab active" id="tab-image" onclick="switchType('image')">
+            <i class="ti ti-photo"></i> Imagen
+          </button>
+          <button class="tab" id="tab-audio" onclick="switchType('audio')">
+            <i class="ti ti-microphone"></i> Voz / Audio
+          </button>
+        </div>
+
+        <div class="input-card">
+          <div class="mode-toggle">
+            <button class="mode-btn active" id="mode-upload" onclick="switchMode('upload')">
+              <i class="ti ti-upload"></i> Subir archivo
+            </button>
+            <button class="mode-btn" id="mode-url" onclick="switchMode('url')">
+              <i class="ti ti-link"></i> Pegar URL
+            </button>
+          </div>
+
+          <div id="upload-section">
+            <div class="drop-zone" id="drop-zone"
+              ondragover="onDrag(event, true)"
+              ondragleave="onDrag(event, false)"
+              ondrop="onDrop(event)"
+              onclick="document.getElementById('file-input').click()">
+              <input type="file" id="file-input" accept="image/*" onchange="onFileSelect(event)" hidden />
+              <i class="ti ti-cloud-upload dz-icon"></i>
+              <p class="dz-text">Arrastra o haz clic para subir</p>
+              <span class="dz-hint" id="dz-hint">Imágenes: JPG, PNG, WEBP, GIF</span>
+            </div>
+            <div id="preview-area" class="preview-area hidden"></div>
+          </div>
+
+          <div id="url-section" class="hidden">
+            <div class="url-row">
+              <input type="text" id="url-input" placeholder="https://ejemplo.com/imagen.jpg" />
+              <button onclick="loadUrl()">Cargar</button>
+            </div>
+            <div id="url-preview" class="preview-area hidden"></div>
+          </div>
+
+          <button class="analyze-btn" id="analyze-btn" onclick="analyzeContent()" disabled>
+            <i class="ti ti-search"></i> Analizar contenido
+          </button>
+
+          <div class="scanner hidden" id="scanner">
+            <div class="scanner-bar">
+              <div class="scanner-fill" id="scanner-fill"></div>
+            </div>
+            <p class="scanner-label" id="scanner-label">Inicializando análisis...</p>
+          </div>
+
+          <div class="error-msg hidden" id="error-msg"></div>
+        </div>
+
+        <div class="info-box">
+          <h3><i class="ti ti-info-circle"></i> Cómo funciona</h3>
+          <ul>
+            <li><strong>Imágenes:</strong> Analiza artefactos visuales, texturas, inconsistencias en manos/ojos/cabello, y patrones de modelos de difusión.</li>
+            <li><strong>Audio:</strong> Análisis conceptual de prosodia, artefactos de síntesis vocal y coherencia espectral.</li>
+          </ul>
+          <p class="info-note">⚠️ Este MVP usa análisis híbrido C2PA y modelos generativos en el backend.</p>
+        </div>
+
+      </section>
+
+      <section class="panel panel-results">
+        <div class="results-placeholder" id="results-placeholder">
+          <i class="ti ti-file-analytics placeholder-icon"></i>
+          <p>Los resultados del análisis aparecerán aquí</p>
+          <span>Sube una imagen o audio para comenzar</span>
+        </div>
+
+        <div class="results hidden" id="results">
+
+          <div class="verdict-card">
+            <div class="verdict-top">
+              <div>
+                <div class="verdict-score" id="result-score">0%</div>
+                <div class="verdict-label">probabilidad de ser IA</div>
+              </div>
+              <span class="verdict-badge" id="result-badge">—</span>
+            </div>
+            <div class="confidence-bar">
+              <div class="confidence-fill" id="confidence-fill"></div>
+            </div>
+            <p class="confidence-text" id="confidence-label"></p>
+          </div>
+
+          <p class="section-title">Métricas de análisis</p>
+          <div class="metrics-grid" id="metrics-grid"></div>
+
+          <p class="section-title">Señales detectadas</p>
+          <div class="signals-list" id="signals-list"></div>
+
+          <div class="analysis-box">
+            <h3><i class="ti ti-notes"></i> Análisis completo</h3>
+            <p id="analysis-text"></p>
+          </div>
+
+          <button class="analyze-btn" onclick="descargarReporte()" style="margin-bottom: 10px; background-color: #3BA06B; border-color: #3BA06B;">
+            <i class="ti ti-download"></i> Descargar Informe PDF
+          </button>
+
+          <button class="reset-btn" onclick="resetAll()">
+            <i class="ti ti-refresh"></i> Analizar otro archivo
+          </button>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+</body>
+</html>
